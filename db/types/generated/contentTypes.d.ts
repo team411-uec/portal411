@@ -372,6 +372,7 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiMemberMember extends Struct.CollectionTypeSchema {
   collectionName: 'members';
   info: {
+    description: '';
     displayName: 'Member';
     pluralName: 'members';
     singularName: 'member';
@@ -380,16 +381,52 @@ export interface ApiMemberMember extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    birthday: Schema.Attribute.Date;
+    contact: Schema.Attribute.Email;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     firstName: Schema.Attribute.String & Schema.Attribute.Required;
+    grade: Schema.Attribute.String;
+    institution: Schema.Attribute.String;
+    key505: Schema.Attribute.Boolean;
+    keyPictlab: Schema.Attribute.Boolean;
+    lastName: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::member.member'
     > &
       Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    studentId: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPrefecturePrefecture extends Struct.CollectionTypeSchema {
+  collectionName: 'prefectures';
+  info: {
+    displayName: 'Prefecture';
+    pluralName: 'prefectures';
+    singularName: 'prefecture';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::prefecture.prefecture'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -907,6 +944,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::member.member': ApiMemberMember;
+      'api::prefecture.prefecture': ApiPrefecturePrefecture;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
