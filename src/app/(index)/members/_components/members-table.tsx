@@ -10,6 +10,7 @@ import { useCallback, useState } from "react";
 import { Member } from "@prisma/client";
 import { updateMember } from "@/actions/update-member";
 import { NameEditCell } from "./name-edit-cell";
+import { DepartmentEditCell } from "./department-edit-cell";
 
 interface Props {
   members: Member[];
@@ -22,6 +23,10 @@ const renderNameEditCell: GridColDef["renderCell"] = (params) => {
 const renderNameCell: GridColDef["renderCell"] = (params) => {
   const { value } = params;
   return `${value?.lastName} ${value?.firstName}`;
+};
+
+const renderDepartmentEditCell: GridColDef["renderCell"] = (params) => {
+  return <DepartmentEditCell {...params} />;
 };
 
 export function MembersTable({ members }: Props) {
@@ -61,6 +66,7 @@ export function MembersTable({ members }: Props) {
       field: "department",
       headerName: "学科",
       editable: true,
+      renderEditCell: renderDepartmentEditCell,
     },
     {
       field: "major",

@@ -1,4 +1,4 @@
-import { InputBase, styled } from "@mui/material";
+import { DataGridInput } from "@/components/data-grid-input";
 import { GridRenderEditCellParams, useGridApiContext } from "@mui/x-data-grid";
 import {
   ChangeEvent,
@@ -8,13 +8,6 @@ import {
   useState,
 } from "react";
 
-const StyledInput = styled(InputBase)({
-  fontSize: "inherit",
-  "& input": {
-    padding: "0 16px",
-    height: "100%",
-  },
-});
 
 export function NameEditCell(
   params: GridRenderEditCellParams<
@@ -72,13 +65,13 @@ export function NameEditCell(
 
   return (
     <>
-      <StyledInput
+      <DataGridInput
         inputRef={ref}
         value={lastName}
         onChange={handleLastNameChange}
         placeholder="名字"
       />
-      <StyledInput
+      <DataGridInput
         inputRef={ref}
         value={firstName}
         onChange={handleFirstNameChange}
