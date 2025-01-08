@@ -35,7 +35,6 @@ export function DepartmentEditCell(params: GridCellParams<any, string>) {
 
   const handleChange = useCallback(
     (event: SyntheticEvent, newValue: string | null) => {
-      console.log(newValue);
       updateMember(newValue || "");
     },
     [updateMember],
