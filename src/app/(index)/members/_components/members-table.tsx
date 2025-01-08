@@ -9,14 +9,27 @@ import { TableToolbar } from "./table-toolbar";
 import { useCallback, useState } from "react";
 import { Member } from "@prisma/client";
 import { updateMember } from "@/actions/update-member";
+import { NameEditCell } from "./name-edit-cell";
 
 interface Props {
   members: Member[];
 }
 
+const renderNameEditCell: GridColDef["renderCell"] = (params) => {
+  return <NameEditCell {...params} />;
+};
+
+const renderNameCell: GridColDef["renderCell"] = (params) => {
+  const { value } = params;
+  return `${value?.lastName} ${value?.firstName}`;
+};
+
 export function MembersTable({ members }: Props) {
   const rows = members.map(({ firstName, lastName, ...member }) => ({
-    name: `${lastName} ${firstName}`,
+    name: {
+      firstName,
+      lastName,
+    },
     ...member,
   }));
   const columns: GridColDef<(typeof rows)[number]>[] = [
@@ -28,9 +41,11 @@ export function MembersTable({ members }: Props) {
     },
     {
       field: "name",
-      headerName: "名前",
+      headerName: "氏名",
       editable: true,
-      
+      renderEditCell: renderNameEditCell,
+      renderCell: renderNameCell,
+      width: 150,
     },
     {
       field: "institution",
@@ -144,11 +159,16 @@ export function MembersTable({ members }: Props) {
   );
 
   const processRowUpdate = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async ({name, ...newRow}: (typeof rows)[number], oldRow: (typeof rows)[number]) => {
-      const result = await updateMember(oldRow.id, newRow);
+    async (
+      { name, ...newRow }: (typeof rows)[number],
+      oldRow: (typeof rows)[number],
+    ) => {
+      const result = await updateMember(oldRow.id, { ...newRow, ...name });
       return {
-        name: `${result.lastName} ${result.firstName}`,
+        name: {
+          firstName: result.firstName,
+          lastName: result.lastName,
+        },
         ...result,
       };
     },
