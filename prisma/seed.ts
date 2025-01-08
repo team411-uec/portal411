@@ -63,6 +63,29 @@ async function main() {
       },
     });
   }
+
+  await prisma.member.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      id: 1,
+      firstName: "四一郎",
+      lastName: "電通",
+      institution: "電気通信大学",
+      faculty: "情報理工学域",
+      department: "I類",
+      major: "コンピュータサイエンスプログラム",
+      studentId: "2311000",
+      entrancedYear: 2023,
+      email: "d2311000@gl.cc.uec.ac.jp",
+      birthday: new Date("2005-01-01"),
+      hasKey505: true,
+      hasKeyPictlab: false,
+      joinedAt: new Date("2023-04-01"),
+      comment: "特になし",
+      addressId: 13,
+    },
+  });
 }
 
 main()
