@@ -1,8 +1,6 @@
 "use server";
 
-import { Member, PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 export async function updateMember(id: number, member: Partial<Member>) {
   return await prisma.member.update({

@@ -30,6 +30,7 @@ export function MembersTable({ members }: Props) {
       field: "name",
       headerName: "名前",
       editable: true,
+      
     },
     {
       field: "institution",

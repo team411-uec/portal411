@@ -1,8 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { MembersTable } from "./_components/members-table";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 export default async function MembersPage() {
   const members = await prisma.member.findMany({ orderBy: { id: "asc" } });
