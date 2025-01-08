@@ -8,6 +8,7 @@ import {
 import { TableToolbar } from "./table-toolbar";
 import { useCallback, useState } from "react";
 import { Member } from "@prisma/client";
+import { updateMember } from "@/actions/update-member";
 
 interface Props {
   members: Member[];
@@ -88,13 +89,13 @@ export function MembersTable({ members }: Props) {
       field: "joinedAt",
       headerName: "入部日",
       editable: true,
-      type: "date"
+      type: "date",
     },
     {
       field: "leftAt",
       headerName: "退部日",
       editable: true,
-      type: "date"
+      type: "date",
     },
     {
       field: "comment",
@@ -141,6 +142,22 @@ export function MembersTable({ members }: Props) {
     [],
   );
 
+  const processRowUpdate = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async ({name, ...newRow}: (typeof rows)[number], oldRow: (typeof rows)[number]) => {
+      const result = await updateMember(oldRow.id, newRow);
+      return {
+        name: `${result.lastName} ${result.firstName}`,
+        ...result,
+      };
+    },
+    [],
+  );
+
+  const handleProcessRowUpdateError = useCallback((error: unknown) => {
+    console.error(error);
+  }, []);
+
   return (
     <DataGrid
       density="compact"
@@ -151,6 +168,8 @@ export function MembersTable({ members }: Props) {
       columns={columns}
       columnVisibilityModel={columnVisibilityModel}
       onColumnVisibilityModelChange={handleColumnVisibilityModelChange}
+      processRowUpdate={processRowUpdate}
+      onProcessRowUpdateError={handleProcessRowUpdateError}
     />
   );
 }
