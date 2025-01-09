@@ -1,14 +1,6 @@
-import { DataGridInput } from "@/components/data-grid-input";
-import { Autocomplete, createFilterOptions } from "@mui/material";
 import { GridCellParams, useGridApiContext } from "@mui/x-data-grid";
-import {
-  SyntheticEvent,
-  useCallback,
-  useLayoutEffect,
-  useRef
-} from "react";
-
-const filter = createFilterOptions<string>();
+import { SyntheticEvent, useCallback, useLayoutEffect, useRef } from "react";
+import { DataGridFreeAutocomplete } from "./data-grid-free-autocomplete";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function DepartmentEditCell(params: GridCellParams<any, string>) {
@@ -41,29 +33,14 @@ export function DepartmentEditCell(params: GridCellParams<any, string>) {
   );
 
   return (
-    <Autocomplete
+    <DataGridFreeAutocomplete
       options={["I類", "II類", "III類"]}
       value={value}
       onChange={handleChange}
       id="department-autocomplete"
-      renderInput={(params) => (
-        <DataGridInput
-          inputProps={params.inputProps}
-          id={params.id}
-          size={params.size}
-          fullWidth={params.fullWidth}
-          {...params.InputProps}
-        />
-      )}
       freeSolo
-      filterOptions={(options, params) => {
-        const filtered = filter(options, params);
-        const isExisting = options.indexOf(params.inputValue) !== -1;
-        if (params.inputValue !== "" && !isExisting) {
-          filtered.push(params.inputValue);
-        }
-        return filtered;
-      }}
+      fullWidth
+      disableClearable
       ref={ref}
     />
   );

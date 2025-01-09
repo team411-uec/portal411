@@ -11,6 +11,7 @@ import { Member } from "@prisma/client";
 import { updateMember } from "@/actions/update-member";
 import { NameEditCell } from "./name-edit-cell";
 import { DepartmentEditCell } from "./department-edit-cell";
+import { MajorEditCell } from "./major-edit-cell";
 
 interface Props {
   members: Member[];
@@ -28,6 +29,10 @@ const renderNameCell: GridColDef["renderCell"] = (params) => {
 const renderDepartmentEditCell: GridColDef["renderCell"] = (params) => {
   return <DepartmentEditCell {...params} />;
 };
+
+const renderMajorEditCell: GridColDef["renderCell"] = (params) => {
+  return <MajorEditCell {...params} />;
+}
 
 export function MembersTable({ members }: Props) {
   const rows = members.map(({ firstName, lastName, ...member }) => ({
@@ -49,6 +54,7 @@ export function MembersTable({ members }: Props) {
       headerName: "氏名",
       editable: true,
       renderEditCell: renderNameEditCell,
+      // TODO: valueFormatに置き換え
       renderCell: renderNameCell,
       width: 150,
     },
@@ -72,6 +78,8 @@ export function MembersTable({ members }: Props) {
       field: "major",
       headerName: "専攻",
       editable: true,
+      renderEditCell: renderMajorEditCell,
+      width: 200,
     },
     {
       field: "studentId",
