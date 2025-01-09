@@ -8,7 +8,6 @@ import {
   useState,
 } from "react";
 
-
 export function NameEditCell(
   params: GridRenderEditCellParams<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -70,12 +69,22 @@ export function NameEditCell(
         value={lastName}
         onChange={handleLastNameChange}
         placeholder="名字"
+        sx={{
+          "& input": {
+            paddingRight: 0,
+          },
+        }}
       />
       <DataGridInput
         inputRef={ref}
         value={firstName}
         onChange={handleFirstNameChange}
         placeholder="名前"
+        sx={{
+          "& input": {
+            paddingLeft: 0,
+          },
+        }}
       />
     </>
   );
