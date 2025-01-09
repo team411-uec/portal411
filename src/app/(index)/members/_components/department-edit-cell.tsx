@@ -41,7 +41,7 @@ export function DepartmentEditCell(params: GridCellParams<any, string>) {
       freeSolo
       fullWidth
       disableClearable
-      ref={ref}
+      inputref={ref}
     />
   );
 }

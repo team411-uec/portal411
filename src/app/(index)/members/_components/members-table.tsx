@@ -12,6 +12,7 @@ import { updateMember } from "@/actions/update-member";
 import { NameEditCell } from "./name-edit-cell";
 import { DepartmentEditCell } from "./department-edit-cell";
 import { MajorEditCell } from "./major-edit-cell";
+import { useSingleClickEditing } from "@/hooks/use-single-click-editing";
 
 interface Props {
   members: Member[];
@@ -32,7 +33,7 @@ const renderDepartmentEditCell: GridColDef["renderCell"] = (params) => {
 
 const renderMajorEditCell: GridColDef["renderCell"] = (params) => {
   return <MajorEditCell {...params} />;
-}
+};
 
 export function MembersTable({ members }: Props) {
   const rows = members.map(({ firstName, lastName, ...member }) => ({
@@ -193,6 +194,9 @@ export function MembersTable({ members }: Props) {
     console.error(error);
   }, []);
 
+  const [cellModesModel, handleCellClick, handleCellModesModelChange] =
+    useSingleClickEditing();
+
   return (
     <DataGrid
       density="compact"
@@ -205,6 +209,9 @@ export function MembersTable({ members }: Props) {
       onColumnVisibilityModelChange={handleColumnVisibilityModelChange}
       processRowUpdate={processRowUpdate}
       onProcessRowUpdateError={handleProcessRowUpdateError}
+      cellModesModel={cellModesModel}
+      onCellClick={handleCellClick}
+      onCellModesModelChange={handleCellModesModelChange}
     />
   );
 }

@@ -67,7 +67,7 @@ export function MajorEditCell(params: GridCellParams<any, string>) {
       freeSolo
       fullWidth
       disableClearable
-      ref={ref}
+      inputref={ref}
     />
   );
 }

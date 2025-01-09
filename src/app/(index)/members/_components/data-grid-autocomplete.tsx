@@ -1,6 +1,6 @@
 import { DataGridInput } from "@/components/data-grid-input";
 import { Autocomplete } from "@mui/material";
-import { ComponentPropsWithRef, ElementType } from "react";
+import { ComponentPropsWithRef, ElementType, Ref } from "react";
 
 type Props<
   Value,
@@ -19,7 +19,9 @@ type Props<
     >
   >,
   "renderInput"
->;
+> & {
+  inputref?: Ref<HTMLInputElement>;
+};
 
 export function DataGridAutocomplete<
   Value,
@@ -38,6 +40,7 @@ export function DataGridAutocomplete<
           size={params.size}
           fullWidth={params.fullWidth}
           {...params.InputProps}
+          inputRef={props.inputref}
         />
       )}
     />
