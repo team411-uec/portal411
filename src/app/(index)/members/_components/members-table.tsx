@@ -179,12 +179,16 @@ export function MembersTable({ members }: Props) {
       oldRow: (typeof rows)[number],
     ) => {
       const result = await updateMember(oldRow.id, { ...newRow, ...name });
+      if (!result.isSuccessful) {
+        throw new Error(result.message);
+      }
+      const { firstName, lastName, ...body } = result.body;
       return {
         name: {
-          firstName: result.firstName,
-          lastName: result.lastName,
+          firstName: firstName,
+          lastName: lastName,
         },
-        ...result,
+        ...body,
       };
     },
     [],
