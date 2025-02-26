@@ -13,7 +13,7 @@ CREATE TABLE "Member" (
     "email" TEXT NOT NULL,
     "birthday" TIMESTAMP(3),
     "hasKey505" BOOLEAN NOT NULL,
-    "hasKeyPitlab" BOOLEAN NOT NULL,
+    "hasKeyPictlab" BOOLEAN NOT NULL,
     "joinedAt" TIMESTAMP(3) NOT NULL,
     "leftAt" TIMESTAMP(3),
     "comment" TEXT NOT NULL,

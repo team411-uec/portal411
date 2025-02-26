@@ -28,7 +28,7 @@ model Member {
   email         String
   birthday      DateTime?
   hasKey505     Boolean
-  hasKeyPitlab  Boolean
+  hasKeyPictlab Boolean
   joinedAt      DateTime
   leftAt        DateTime?
   comment       String

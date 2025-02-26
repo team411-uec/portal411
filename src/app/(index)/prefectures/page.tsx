@@ -1,8 +1,6 @@
+import { prisma } from "@/lib/prisma";
 import { Box } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
 
 export default async function PrefecturePage() {
   const prefectures = await prisma.prefecture.findMany();
