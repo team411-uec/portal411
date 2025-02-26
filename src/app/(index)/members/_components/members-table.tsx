@@ -13,6 +13,7 @@ import { NameEditCell } from "./name-edit-cell";
 import { DepartmentEditCell } from "./department-edit-cell";
 import { MajorEditCell } from "./major-edit-cell";
 import { useSingleClickEditing } from "@/hooks/use-single-click-editing";
+import { Alert, Slide, Snackbar } from "@mui/material";
 
 interface Props {
   members: Member[];
@@ -166,6 +167,9 @@ export function MembersTable({ members }: Props) {
       updatedAt: false,
     });
 
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const handleColumnVisibilityModelChange = useCallback(
     (model: GridColumnVisibilityModel) => {
       setColumnVisibilityModel(model);
@@ -195,27 +199,38 @@ export function MembersTable({ members }: Props) {
   );
 
   const handleProcessRowUpdateError = useCallback((error: unknown) => {
-    console.error(error);
+    setErrorMessage(error instanceof Error ? error.message : "Unknown Error");
+    setIsError(true);
   }, []);
 
   const [cellModesModel, handleCellClick, handleCellModesModelChange] =
     useSingleClickEditing();
 
   return (
-    <DataGrid
-      density="compact"
-      slots={{
-        toolbar: TableToolbar,
-      }}
-      rows={rows}
-      columns={columns}
-      columnVisibilityModel={columnVisibilityModel}
-      onColumnVisibilityModelChange={handleColumnVisibilityModelChange}
-      processRowUpdate={processRowUpdate}
-      onProcessRowUpdateError={handleProcessRowUpdateError}
-      cellModesModel={cellModesModel}
-      onCellClick={handleCellClick}
-      onCellModesModelChange={handleCellModesModelChange}
-    />
+    <>
+      <DataGrid
+        density="compact"
+        slots={{
+          toolbar: TableToolbar,
+        }}
+        rows={rows}
+        columns={columns}
+        columnVisibilityModel={columnVisibilityModel}
+        onColumnVisibilityModelChange={handleColumnVisibilityModelChange}
+        processRowUpdate={processRowUpdate}
+        onProcessRowUpdateError={handleProcessRowUpdateError}
+        cellModesModel={cellModesModel}
+        onCellClick={handleCellClick}
+        onCellModesModelChange={handleCellModesModelChange}
+      />
+      <Snackbar
+        open={isError}
+        TransitionComponent={Slide}
+      >
+        <Alert onClose={() => setIsError(false)} severity="error">
+          {errorMessage}
+        </Alert>
+      </Snackbar>
+    </>
   );
 }
