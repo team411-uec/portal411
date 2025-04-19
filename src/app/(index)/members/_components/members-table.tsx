@@ -219,9 +219,9 @@ export function MembersTable({ members }: Props) {
         onColumnVisibilityModelChange={handleColumnVisibilityModelChange}
         processRowUpdate={processRowUpdate}
         onProcessRowUpdateError={handleProcessRowUpdateError}
-        cellModesModel={cellModesModel}
-        onCellClick={handleCellClick}
-        onCellModesModelChange={handleCellModesModelChange}
+        // cellModesModel={cellModesModel}
+        // onCellClick={handleCellClick}
+        // onCellModesModelChange={handleCellModesModelChange}
       />
       <Snackbar
         open={isError}
